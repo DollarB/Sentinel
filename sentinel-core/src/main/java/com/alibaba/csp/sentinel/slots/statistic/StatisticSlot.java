@@ -59,7 +59,9 @@ public class StatisticSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
             fireEntry(context, resourceWrapper, node, count, prioritized, args);
 
             // Request passed, add thread count and pass count.
+            // 当前请求线程数+1
             node.increaseThreadNum();
+            // 新增请求数
             node.addPassRequest(count);
 
             if (context.getCurEntry().getOriginNode() != null) {

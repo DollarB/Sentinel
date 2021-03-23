@@ -27,6 +27,9 @@ import java.util.concurrent.atomic.LongAdder;
  */
 public class MetricBucket {
 
+    /**
+     * MetricBucket通过定义了一个LongAdder数组来存储不同类型的流量统计值，具体的类型则都定义在MetricEvent枚举中。
+     */
     private final LongAdder[] counters;
 
     private volatile long minRt;
@@ -103,18 +106,22 @@ public class MetricBucket {
         return get(MetricEvent.SUCCESS);
     }
 
+    // 统计pass数
     public void addPass(int n) {
         add(MetricEvent.PASS, n);
     }
 
+    // 统计可占用的pass数
     public void addOccupiedPass(int n) {
         add(MetricEvent.OCCUPIED_PASS, n);
     }
 
+    // 统计异常数
     public void addException(int n) {
         add(MetricEvent.EXCEPTION, n);
     }
 
+    // 统计block数
     public void addBlock(int n) {
         add(MetricEvent.BLOCK, n);
     }

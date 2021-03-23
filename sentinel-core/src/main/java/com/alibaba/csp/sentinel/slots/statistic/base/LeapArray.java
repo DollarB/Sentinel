@@ -39,12 +39,24 @@ import com.alibaba.csp.sentinel.util.TimeUtil;
  * @author Carpenter Lee
  */
 public abstract class LeapArray<T> {
-
+    /**
+     * 时间窗口大小 单位ms
+     */
     protected int windowLengthInMs;
+
+    /**
+     * 切分的窗口数
+     */
     protected int sampleCount;
+
+    /**
+     * 统计的时间间隔 intervalInMs = windowLengthInMs * sampleCount
+     */
     protected int intervalInMs;
     private double intervalInSecond;
-
+    /**
+     * 窗口数组 数组大小 = sampleCount
+     */
     protected final AtomicReferenceArray<WindowWrap<T>> array;
 
     /**
@@ -97,12 +109,18 @@ public abstract class LeapArray<T> {
      */
     protected abstract WindowWrap<T> resetWindowTo(WindowWrap<T> windowWrap, long startTime);
 
+    /**
+     * 根据当前时间戳计算当前所属的窗口数组索引下标
+     */
     private int calculateTimeIdx(/*@Valid*/ long timeMillis) {
         long timeId = timeMillis / windowLengthInMs;
         // Calculate current index so we can map the timestamp to the leap array.
-        return (int)(timeId % array.length());
+        return (int) (timeId % array.length());
     }
 
+    /**
+     * 计算当前窗口的开始时间戳
+     */
     protected long calculateWindowStart(/*@Valid*/ long timeMillis) {
         return timeMillis - timeMillis % windowLengthInMs;
     }
@@ -118,6 +136,7 @@ public abstract class LeapArray<T> {
             return null;
         }
 
+        // 根据当前时间戳计算当前所属的窗口数组索引下标
         int idx = calculateTimeIdx(timeMillis);
         // Calculate current bucket start time.
         long windowStart = calculateWindowStart(timeMillis);

@@ -138,7 +138,9 @@ public class DefaultNode extends StatisticNode {
 
     @Override
     public void addPassRequest(int count) {
+        // 用StatisticNode（父类）来进行统计
         super.addPassRequest(count);
+        // 调用StatisticNode（父类），根据clusterNode汇总统计
         this.clusterNode.addPassRequest(count);
     }
 

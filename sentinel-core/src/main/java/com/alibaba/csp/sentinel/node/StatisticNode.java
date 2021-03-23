@@ -244,6 +244,7 @@ public class StatisticNode implements Node {
 
     @Override
     public void addPassRequest(int count) {
+        // 调用了ArrayMetric的addPass方法来统计的，并且统计了两种不同时间维度的数据(秒级和分钟级)
         rollingCounterInSecond.addPass(count);
         rollingCounterInMinute.addPass(count);
     }
